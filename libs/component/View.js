@@ -9,6 +9,9 @@ export class View extends PIXI.Container {
         this._assets = null;
     }
 
+    /** @abstract */
+    resize(data) { }
+
     setAssets(assets) {
         this._assets = assets;
     }

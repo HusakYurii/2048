@@ -27,8 +27,13 @@ export class Controller extends PIXI.utils.EventEmitter {
         this._view.setAssets(assets);
     }
 
+    resize(data) { 
+        this._view.resize(data);
+    }
+
     /** @abstract */
     run() { }
+
 
     /** @abstract */
     update(delta = 1) { }

@@ -24,6 +24,15 @@ export class Application extends PIXI.Application {
         this._rawComponents[data.name] = data;
     }
 
+    resizeApp() {
+        const { width, height } = this.screen;
+        
+        Object.values(this._components).forEach(({ controller }) => {
+            controller.view.position.set(width / 2, height / 2)
+            controller.resize();
+        });
+    }
+
     init() {
         Object.values(this._rawComponents)
             .forEach(({ name, config, Model, View, Controller }) => {
@@ -39,8 +48,10 @@ export class Application extends PIXI.Application {
         Object.values(this._components).forEach(({ controller }) => {
             controller.run();
             this.stage.addChild(controller.view);
-            this.ticker.add(delta => controller.update(delta))
+            this.ticker.add(delta => controller.update(delta));
         });
+
+        this.resizeApp();
     }
 
     /** @readonly */

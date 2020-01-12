@@ -1,4 +1,7 @@
-/*** Super Class for a component based on MVC approach */
+/**
+ * @class
+ * Super Class for a component based on MVC approach
+ *  */
 export class View extends PIXI.Container {
     constructor() {
         super();

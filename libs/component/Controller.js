@@ -1,5 +1,12 @@
-/*** Super Class for a component based on MVC approach */
+/**
+ * @class 
+ * Super Class for a component based on MVC approach 
+ * */
 export class Controller extends PIXI.utils.EventEmitter {
+
+    /**
+     * @param {String} name - a component's name
+     */
     constructor(name = "noName") {
         super();
         this._name = name;

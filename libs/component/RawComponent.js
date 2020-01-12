@@ -1,4 +1,17 @@
+/**
+ * @class
+ * Each raw component class must me wrapped by this abstraction
+ */
 export class RawComponent {
+
+    /**
+     * @param {Object} params
+     * @param {Sting} Object.name - name of a component
+     * @param {Class} Object.model - an instance of Model class
+     * @param {Class} Object.view  - an instance of View class
+     * @param {Class} Object.controller  - an instance of Controller class
+     * @param {Object} Object.config - data which will be set to the model
+     */
     constructor({ name, model, view, controller, config = {} }) {
         this._name = name;
         this._view = view;

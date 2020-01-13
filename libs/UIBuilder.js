@@ -43,7 +43,7 @@ export class UIBuilder {
     static rect({ color, alpha = 1, width, height }) {
         return new PIXI.Graphics()
             .beginFill(color, alpha)
-            .drawRoundedRect(-width / 2, -height / 2, width, height)
+            .drawRect(-width / 2, -height / 2, width, height)
             .endFill();
     }
 

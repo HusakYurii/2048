@@ -18,7 +18,7 @@ export default new RawComponent({
             },
             cellsTintMap: {
                 '0': {
-                    tint: '0xd2c4b6'
+                    tint: '0xffffff'
                 },
                 '2': {
                     tint: '0xeee4da'

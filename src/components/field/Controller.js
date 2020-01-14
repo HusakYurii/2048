@@ -14,8 +14,7 @@ export default class extends Controller {
         const emptyGrid = this.engine.generateGrid(initData.grid);
         const gridConfig = this.engine.configureGrid({ emptyGrid, filedSizes, ...initData });
 
-        this.model.setGridMap(emptyGrid);
-        this.model.setGridConfig(gridConfig);
+        this.model.setGridMap(gridConfig);
 
         this.view.createFiledBg(filedSizes);
         this.view.createFieldBgCells(gridConfig);

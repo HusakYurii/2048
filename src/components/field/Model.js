@@ -1,4 +1,5 @@
 import { Model } from "../../../libs/component/Model.js";
+import { CellModel } from "./sub-models/CellModel.js";
 
 export default class extends Model {
     constructor() {
@@ -6,19 +7,16 @@ export default class extends Model {
 
         this.initData = {};
         this.grid = null;
-        this.gridConfig = null;
     }
 
     setData({ model }) {
         this.initData = Object.assign({}, model)
     }
 
-    setGridMap(grid) {
-        this.grid = grid;
-    }
-
-    setGridConfig(gridConfig) {
-        this.gridConfig = gridConfig;
+    setGridMap(gridMap) {
+        this.grid = gridMap.map((gridRow) => {
+            return gridRow.map((val) => new CellModel(val));
+        });
     }
 
     get filedSizes() {

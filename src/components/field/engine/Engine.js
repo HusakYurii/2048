@@ -22,9 +22,6 @@ export class Engine {
                 const y = -(fS.height - cS.pitch - cS.height) / 2 + ((cS.height + cS.pitch) * row);
                 return { x, y, row, col, type, ...cS };
             });
-        })
-
-        // return na obejct with {x,y,w,h,row,col,type}
-        // I will use that to build empty cells for bg and actual first cells for game
+        });
     }
 }

@@ -1,6 +1,5 @@
-import { Controller } from "../../../libs/component/Controller.js";
-import { Engine } from "./engine/Engine.js";
-
+import { Controller } from '../../../libs/component/Controller.js';
+import { Engine } from './engine/Engine.js';
 
 export default class extends Controller {
     constructor() {
@@ -20,7 +19,5 @@ export default class extends Controller {
         this.view.createFieldBgCells(gridConfig);
     }
 
-    update(delta = 1) {
-
-    }
+    update(delta = 1) { }
 }

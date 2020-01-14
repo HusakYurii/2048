@@ -1,10 +1,10 @@
-import { RawComponent } from "../../../libs/component/RawComponent.js";
-import Controller from "./Controller.js";
-import Model from "./Model.js";
-import View from "./View.js";
+import { RawComponent } from '../../../libs/component/RawComponent.js';
+import Controller from './Controller.js';
+import Model from './Model.js';
+import View from './View.js';
 
 export default new RawComponent({
-    name: "Field",
+    name: 'Field',
     view: View,
     model: Model,
     controller: Controller,
@@ -17,29 +17,29 @@ export default new RawComponent({
                 pitch: 8
             },
             cellsTintMap: {
-                "0": {
-                    tint: "0xd2c4b6"
+                '0': {
+                    tint: '0xd2c4b6'
                 },
-                "2": {
-                    tint: "0xeee4da"
+                '2': {
+                    tint: '0xeee4da'
                 },
-                "4": {
-                    tint: "0xede0c8"
+                '4': {
+                    tint: '0xede0c8'
                 },
-                "8": {
-                    tint: "0xf2b179"
+                '8': {
+                    tint: '0xf2b179'
                 },
-                "16": {
-                    tint: "0xf59563"
+                '16': {
+                    tint: '0xf59563'
                 },
-                "32": {
-                    tint: "0xf67c5f"
+                '32': {
+                    tint: '0xf67c5f'
                 },
-                "64": {
-                    tint: "0xf65e3b"
+                '64': {
+                    tint: '0xf65e3b'
                 },
-                "128": {
-                    tint: "0xedce72"
+                '128': {
+                    tint: '0xedce72'
                 }
             }
         },
@@ -48,14 +48,14 @@ export default new RawComponent({
             fieldBackground: {
                 width: 600,
                 height: 600,
-                type: "rect",
-                color: "0xbbada0"
+                type: 'rect',
+                color: '0xbbada0'
             },
             baseCell: {
                 width: 64,
                 height: 64,
-                type: "rect",
-                color: "0xFFFFFF"
+                type: 'rect',
+                color: '0xFFFFFF'
             }
         }
     }

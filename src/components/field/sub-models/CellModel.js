@@ -1,4 +1,4 @@
-import { Model } from "../../../../libs/component/Model";
+import { Model } from '../../../../libs/component/Model';
 
 class CellModel extends Model {
     constructor({ x, y, row, col, type, width, height }) {

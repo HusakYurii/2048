@@ -1,5 +1,5 @@
-import { Model } from "../../../libs/component/Model.js";
-import { CellModel } from "./sub-models/CellModel.js";
+import { Model } from '../../../libs/component/Model.js';
+import { CellModel } from './sub-models/CellModel.js';
 
 export default class extends Model {
     constructor() {
@@ -10,12 +10,12 @@ export default class extends Model {
     }
 
     setData({ model }) {
-        this.initData = Object.assign({}, model)
+        this.initData = Object.assign({}, model);
     }
 
     setGridMap(gridMap) {
-        this.grid = gridMap.map((gridRow) => {
-            return gridRow.map((val) => new CellModel(val));
+        this.grid = gridMap.map(gridRow => {
+            return gridRow.map(val => new CellModel(val));
         });
     }
 
@@ -23,8 +23,8 @@ export default class extends Model {
         const { grid, cellSizes } = this.initData;
 
         return {
-            width: (cellSizes.width * grid.columns) + (cellSizes.pitch * grid.columns + 1),
-            height: (cellSizes.height * grid.rows) + (cellSizes.pitch * grid.rows + 1)
-        }
+            width: cellSizes.width * grid.columns + (cellSizes.pitch * grid.columns + 1),
+            height: cellSizes.height * grid.rows + (cellSizes.pitch * grid.rows + 1)
+        };
     }
 }

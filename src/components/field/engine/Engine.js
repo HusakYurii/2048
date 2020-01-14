@@ -12,8 +12,19 @@ export class Engine {
         });
     }
 
-    configureGrid() {
-        // return na obejct with {filed: {w, h}, cells: {x,y,w,h,row,col,type}}
+    configureGrid(data) {
+        const { emptyGrid, cellSizes: cS, filedSizes: fS } = data;
+
+
+        return emptyGrid.map((gridRow) => {
+            return gridRow.map(({ type, row, col }) => {
+                const x = -(fS.width - cS.pitch - cS.width) / 2 + ((cS.width + cS.pitch) * col);
+                const y = -(fS.height - cS.pitch - cS.height) / 2 + ((cS.height + cS.pitch) * row);
+                return { x, y, row, col, type, ...cS };
+            });
+        })
+
+        // return na obejct with {x,y,w,h,row,col,type}
         // I will use that to build empty cells for bg and actual first cells for game
     }
 }

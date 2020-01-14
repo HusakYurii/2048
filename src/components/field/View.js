@@ -8,11 +8,15 @@ export default class extends View {
 
     }
 
-    createFiledBg(grid) {
+    createFiledBg({width, height}) {
         const background = UIBuilder.createSprite({
             texture: this.assets["fieldBackground"],
             modifiers: { anchor: { x: 0.5, y: 0.5 } }
         });
+
+        background.width = width;
+        background.height = height;
+
         this.addChild(background);
     }
 
@@ -30,6 +34,7 @@ export default class extends View {
     createCell(texture, params) {
         const Constructor = params.type === 0 ? EmptyCell : class { };
         const cell = new Constructor(texture, params);
+        cell.position.set(params.x, params.y);
 
         return cell;
     }

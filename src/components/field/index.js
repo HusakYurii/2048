@@ -13,11 +13,8 @@ export default new RawComponent({
             grid: { rows: 4, columns: 4 },
             cellSizes: {
                 width: 64,
-                height: 64
-            },
-            filedSizes: {
-                width: (64 * 4) + (5 * 4),
-                height: (64 * 4) + (5 * 4)
+                height: 64,
+                pitch: 8
             },
             cellsTintMap: {
                 "0": {
@@ -49,8 +46,8 @@ export default new RawComponent({
 
         texturesToGenerate: {
             fieldBackground: {
-                width: (64 * 4) + (5 * 4),
-                height: (64 * 4) + (5 * 4),
+                width: 600,
+                height: 600,
                 type: "rect",
                 color: "0xbbada0"
             },

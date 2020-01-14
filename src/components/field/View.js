@@ -1,10 +1,13 @@
 import { View } from '../../../libs/component/View.js';
 import { UIBuilder } from '../../../libs/UIBuilder.js';
 import { EmptyCell } from './ui/EmptyCell.js';
+import { Cell } from './ui/Cell.js';
 
 export default class extends View {
     constructor() {
         super();
+
+        this.tintMap = {};
     }
 
     createFiledBg({ width, height }) {
@@ -30,9 +33,13 @@ export default class extends View {
         this.addChild(...cells);
     }
 
-    createCell(texture, params) {
-        const Constructor = params.type === 0 ? EmptyCell : class { };
-        const cell = new Constructor(texture, params);
+    setCellTintMap(tintMap) {
+        this.tintMap = tintMap;
+    }
+
+    createCell(texture, params, tintMap = {}) {
+        const Constructor = params.type === 0 ? EmptyCell : Cell;
+        const cell = new Constructor(texture, params, tintMap);
         cell.position.set(params.x, params.y);
 
         return cell;

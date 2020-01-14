@@ -17,6 +17,7 @@ export default class extends Controller {
 
         this.view.createFiledBg(filedSizes);
         this.view.createFieldBgCells(gridConfig);
+        this.view.setCellTintMap(initData.cellsTintMap);
     }
 
     update(delta = 1) { }

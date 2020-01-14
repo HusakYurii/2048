@@ -14,8 +14,8 @@ export class Engine {
 
         return emptyGrid.map(gridRow => {
             return gridRow.map(({ type, row, col }) => {
-                const x = -(fS.width - cS.pitch - cS.width) / 2 + (cS.width + cS.pitch) * col;
-                const y = -(fS.height - cS.pitch - cS.height) / 2 + (cS.height + cS.pitch) * row;
+                const x = -(fS.width - cS.pitch * 2 - cS.width) / 2 + (cS.width + cS.pitch) * col;
+                const y = -(fS.height - cS.pitch * 2 - cS.height) / 2 + (cS.height + cS.pitch) * row;
                 return { x, y, row, col, type, ...cS };
             });
         });

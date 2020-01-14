@@ -23,8 +23,8 @@ export default class extends Model {
         const { grid, cellSizes } = this.initData;
 
         return {
-            width: cellSizes.width * grid.columns + (cellSizes.pitch * grid.columns + 1),
-            height: cellSizes.height * grid.rows + (cellSizes.pitch * grid.rows + 1)
+            width: cellSizes.width * grid.columns + (cellSizes.pitch * (grid.columns + 1)),
+            height: cellSizes.height * grid.rows + (cellSizes.pitch * (grid.rows + 1))
         };
     }
 }

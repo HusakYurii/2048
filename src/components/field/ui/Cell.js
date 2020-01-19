@@ -2,17 +2,16 @@ import { ICell } from './ICell.js';
 import { UIBuilder } from '../../../../libs/UIBuilder.js';
 
 export class Cell extends ICell {
-    constructor(texture, { row, col, type = 0 } = {}, tintMap = {}) {
+    constructor(texture, { row, col, type } = {}, tintMap) {
         super(texture);
 
-        this.tintMap = tintMap;
+        this.tint = tintMap[type].tint || "0xFFFFFF";
         this.type = type;
         this.row = row;
         this.col = col;
         this.text = '';
 
         this.createText();
-        this.changeType(type);
     }
 
     createText() {
@@ -32,15 +31,6 @@ export class Cell extends ICell {
         this.text.scale.set(1); // reset scale back before calculating new scl factor
         const scl = Cell.calcSclFactor(this.width, this.text.width);
         this.text.scale.set(scl);
-    }
-
-    setTint({ tint }) {
-        this.tint = tint;
-    }
-
-    changeType(type) {
-        this.setTint(this.tintMap[type]);
-        this.setText(type);
     }
 
     static calcSclFactor(cellW, txtW) {

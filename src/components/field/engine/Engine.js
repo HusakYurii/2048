@@ -1,6 +1,13 @@
 export class Engine {
     constructor() { }
 
+    calculateFieldSizes({ grid, cellSizes }) {
+        return {
+            width: cellSizes.width * grid.columns + cellSizes.pitch * (grid.columns + 1),
+            height: cellSizes.height * grid.rows + cellSizes.pitch * (grid.rows + 1)
+        };
+    }
+
     generateGrid({ rows, columns }) {
         const grid = Array.from({ length: rows }).map(_ => Array.from({ length: columns }).fill(0));
 
@@ -9,14 +16,20 @@ export class Engine {
         });
     }
 
-    configureGrid(data) {
-        const { emptyGrid, cellSizes: cS, filedSizes: fS } = data;
+    configureGrid({ cellSizes, filedSizes, grid }) {
+        const emptyGrid = this.generateGrid(grid);
+
+        const calcPosition = (field, cell, col, row) => {
+            return {
+                x: -(field.width - cell.pitch * 2 - cell.width) / 2 + (cell.width + cell.pitch) * col,
+                y: -(field.height - cell.pitch * 2 - cell.height) / 2 + (cell.height + cell.pitch) * row
+            };
+        };
 
         return emptyGrid.map(gridRow => {
             return gridRow.map(({ type, row, col }) => {
-                const x = -(fS.width - cS.pitch * 2 - cS.width) / 2 + (cS.width + cS.pitch) * col;
-                const y = -(fS.height - cS.pitch * 2 - cS.height) / 2 + (cS.height + cS.pitch) * row;
-                return { x, y, row, col, type, ...cS };
+                const pos = calcPosition(filedSizes, cellSizes, col, row);
+                return { row, col, type, ...cellSizes, ...pos };
             });
         });
     }

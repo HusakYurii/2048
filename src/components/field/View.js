@@ -8,6 +8,11 @@ export default class extends View {
         super();
 
         this.tintMap = {};
+        this.playableCells = [];
+    }
+
+    initPlayableCells({ rows, columns }) {
+        this.playableCells = Array.from({ length: rows }).map(_ => Array.from({ length: columns }).fill(null));
     }
 
     createFiledBg({ width, height }) {
@@ -25,12 +30,10 @@ export default class extends View {
     createFieldBgCells(gridConfig) {
         const texture = this.assets['baseCell'];
 
-        const cells = gridConfig.reduce((acc, gridRow) => {
+        gridConfig.forEach(gridRow => {
             const collection = gridRow.map(params => this.createCell(texture, params));
-            return [...acc, ...collection];
-        }, []);
-
-        this.addChild(...cells);
+            this.addChild(...collection);
+        });
     }
 
     setCellTintMap(tintMap) {
@@ -41,7 +44,6 @@ export default class extends View {
         const Constructor = params.type === 0 ? EmptyCell : Cell;
         const cell = new Constructor(texture, params, tintMap);
         cell.position.set(params.x, params.y);
-
         return cell;
     }
 }

@@ -7,13 +7,15 @@ export default class extends Controller {
 
         this.engine = new Engine();
     }
+
     run() {
-        const { initData, filedSizes } = this.model;
+        const { initData } = this.model;
+        const filedSizes = this.engine.calculateFieldSizes(initData);
+        const gridConfig = this.engine.configureGrid({ filedSizes, ...initData });
 
-        const emptyGrid = this.engine.generateGrid(initData.grid);
-        const gridConfig = this.engine.configureGrid({ emptyGrid, filedSizes, ...initData });
+        this.model.setCalcultedData(gridConfig);
 
-        this.model.setGridMap(gridConfig);
+        this.view.initPlayableCells(initData.grid);
 
         this.view.createFiledBg(filedSizes);
         this.view.createFieldBgCells(gridConfig);

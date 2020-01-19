@@ -57,6 +57,19 @@ export default new RawComponent({
                 type: 'rect',
                 color: '0xFFFFFF'
             }
-        }
+        },
+
+        events: [
+            {
+                subscribeTo: {
+                    componentName: 'InteractiveLayer',
+                    eventName: 'userSwipe',
+                    type: 'on'
+                },
+                use: {
+                    callbackName: 'onUserSwipe',
+                }
+            }
+        ]
     }
 });

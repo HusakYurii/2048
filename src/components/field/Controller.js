@@ -2,8 +2,8 @@ import { Controller } from '../../../libs/component/Controller.js';
 import { Engine } from './engine/Engine.js';
 
 export default class extends Controller {
-    constructor() {
-        super();
+    constructor(...params) {
+        super(...params);
 
         this.engine = new Engine();
     }
@@ -18,6 +18,10 @@ export default class extends Controller {
         this.view.createFiledBg(filedSizes);
         this.view.createFieldBgCells(gridConfig);
         this.view.setCellTintMap(initData.cellsTintMap);
+    }
+
+    onUserSwipe(...args) {
+
     }
 
     update(delta = 1) { }

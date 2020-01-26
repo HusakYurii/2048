@@ -20,8 +20,8 @@ export default class extends Controller {
         this.view.createFiledBg(filedSizes, gridConfig);
     }
 
-    onUserSwipe(...args) {
-
+    onUserSwipe({ dir }) {
+        console.log(dir)
     }
 
     update(delta = 1) { }

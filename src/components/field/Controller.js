@@ -15,11 +15,9 @@ export default class extends Controller {
 
         this.model.setCalcultedData(gridConfig);
 
-        this.view.initPlayableCells(initData.grid);
+        this.view.initViewData(initData);
 
-        this.view.createFiledBg(filedSizes);
-        this.view.createFieldBgCells(gridConfig);
-        this.view.setCellTintMap(initData.cellsTintMap);
+        this.view.createFiledBg(filedSizes, gridConfig);
     }
 
     onUserSwipe(...args) {

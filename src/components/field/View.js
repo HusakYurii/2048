@@ -11,33 +11,28 @@ export default class extends View {
         this.playableCells = [];
     }
 
-    initPlayableCells({ rows, columns }) {
-        this.playableCells = Array.from({ length: rows }).map(_ => Array.from({ length: columns }).fill(null));
+    initViewData({ grid, cellsTintMap }) {
+        const createArr = (n) => Array.from({ length: n });
+        this.playableCells = createArr(grid.row).map(x => createArr(grid.columns)).fill(null);
+        this.tintMap = cellsTintMap;
     }
 
-    createFiledBg({ width, height }) {
+    createFiledBg(filedSizes, gridConfig) {
         const background = UIBuilder.createSprite({
             texture: this.assets['fieldBackground'],
             modifiers: { anchor: { x: 0.5, y: 0.5 } }
         });
 
-        background.width = width;
-        background.height = height;
+        background.width = filedSizes.width;
+        background.height = filedSizes.height;
 
         this.addChild(background);
-    }
 
-    createFieldBgCells(gridConfig) {
-        const texture = this.assets['baseCell'];
-
-        gridConfig.forEach(gridRow => {
-            const collection = gridRow.map(params => this.createCell(texture, params));
-            this.addChild(...collection);
+        gridConfig.forEach((gridRow) => {
+            gridRow.forEach((params) => {
+                this.addChild(this.createCell(this.assets['baseCell'], params));
+            });
         });
-    }
-
-    setCellTintMap(tintMap) {
-        this.tintMap = tintMap;
     }
 
     createCell(texture, params, tintMap = {}) {

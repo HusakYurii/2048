@@ -9,6 +9,10 @@ export default new RawComponent({
     model: Model,
     controller: Controller,
     config: {
+        model: {
+            width: 420,
+            height: 600
+        },
         texturesToGenerate: {},
         events: []
     }

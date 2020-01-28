@@ -21,7 +21,11 @@ export default class extends Controller {
     }
 
     onUserSwipe({ dir }) {
-        console.log(dir)
+        console.log(dir);
+
+        const cells = this.engine.generateRandomCells(this.model.grid);
+        this.model.updateData(cells);
+        this.view.updateView(cells);
     }
 
     update(delta = 1) { }

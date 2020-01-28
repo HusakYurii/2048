@@ -9,11 +9,12 @@ export default class extends View {
 
         this.tintMap = {};
         this.playableCells = [];
+        this.cellsContainer = null;
     }
 
     initViewData({ grid, cellsTintMap }) {
         const createArr = (n) => Array.from({ length: n });
-        this.playableCells = createArr(grid.row).map(x => createArr(grid.columns)).fill(null);
+        this.playableCells = createArr(grid.rows).map(x => createArr(grid.columns).fill(null));
         this.tintMap = cellsTintMap;
     }
 
@@ -40,5 +41,18 @@ export default class extends View {
         const cell = new Constructor(texture, params, tintMap);
         cell.position.set(params.x, params.y);
         return cell;
+    }
+
+    updateView(cells) {
+        if (!this.cellsContainer) {
+            this.cellsContainer = this.addChild(UIBuilder.createContainer());
+        }
+
+        cells.forEach((params) => {
+            const cell = this.createCell(this.assets['baseCell'], params, this.tintMap);
+
+            this.playableCells[cell.row][cell.col] = cell;
+            this.cellsContainer.addChild(cell);
+        });
     }
 }

@@ -33,4 +33,26 @@ export class Engine {
             });
         });
     }
+
+    generateRandomCells(gridData) {
+        const emptyCells = gridData.flat().filter(({ type }) => type === 0);
+        let indx = Engine.randomInt(0, emptyCells.length);
+        let counter = 0;
+
+        let cellData;
+
+        while (true) {
+            if (counter >= emptyCells.length) return;
+            else counter += 1;
+
+            if (emptyCells[indx].type === 0) break;
+            else indx = Engine.randomInt(0, emptyCells.length);
+        }
+
+        return [Object.assign({}, emptyCells[indx], { type: 2 })];
+    }
+}
+
+Engine.randomInt = function (min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
 }

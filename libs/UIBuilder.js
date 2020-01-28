@@ -1,4 +1,8 @@
 export class UIBuilder {
+    static createContainer() {
+        return new PIXI.Container();
+    }
+
     static createSprite({ texture, modifiers } = {}) {
         const sprite = new PIXI.Sprite(texture);
         return this._useModifiers(sprite, modifiers);

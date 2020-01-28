@@ -2,22 +2,20 @@ import { ICell } from './ICell.js';
 import { UIBuilder } from '../../../../libs/UIBuilder.js';
 
 export class Cell extends ICell {
-    constructor(texture, { row, col, type } = {}, tintMap) {
-        super(texture);
+    constructor(texture, params, tintMap) {
+        super(texture, params);
 
-        this.tint = tintMap[type].tint || "0xFFFFFF";
-        this.type = type;
-        this.row = row;
-        this.col = col;
+        this.tint = tintMap[params.type].tint || "0xFFFFFF";
         this.text = '';
 
         this.createText();
+        this.setText(this.type);
     }
 
     createText() {
         this.text = UIBuilder.createText({
             text: '',
-            styles: { fill: '0xFFFFFF', fontSize: 20 },
+            styles: { fill: '0x000000', fontSize: 20 },
             modifiers: {
                 anchor: { x: 0.5, y: 0.5 }
             }

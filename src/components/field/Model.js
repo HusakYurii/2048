@@ -16,4 +16,10 @@ export default class extends Model {
     setCalcultedData(gridConfig) {
         this.grid = gridConfig.map(gridRow => gridRow.map(val => new CellModel(val)));
     }
+
+    updateData(cells) {
+        cells.forEach(({ row, col, type }) => {
+            this.grid[row][col].type = type;
+        });
+    }
 }

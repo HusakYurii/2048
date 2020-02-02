@@ -1,4 +1,5 @@
 import { Controller } from '../../../libs/component/Controller.js';
+import CONSTANTS from '../shared/Constants.js';
 
 export default class extends Controller {
     constructor() {
@@ -19,7 +20,7 @@ export default class extends Controller {
         this.view.addSwipeCallbacks(
             this.onSwipePointerDown,
             this.onSwipePointerUp
-        )
+        );
     }
 
     onSwipePointerDown({ data }) {
@@ -35,7 +36,7 @@ export default class extends Controller {
 
         this.pointersPos.curr = data.getLocalPosition(this.view);
 
-        this.emit('userSwipe', { dir: this.calcSwipeDir(this.pointersPos) });
+        this.emit('userSwipe', this.calcSwipeDir(this.pointersPos));
 
         this.pointersId = [];
         this.pointersPos = {};
@@ -46,9 +47,9 @@ export default class extends Controller {
         const dy = curr.y - prev.y;
 
         if (Math.abs(dx) > Math.abs(dy)) {
-            return (dx > 0) ? "RIGHT" : "LEFT";
+            return (dx > 0) ? CONSTANTS.SWIPE.RIGHT : CONSTANTS.SWIPE.LEFT;
         } else {
-            return (dy > 0) ? "DOWN" : "UP";
+            return (dy > 0) ? CONSTANTS.SWIPE.DOWN : CONSTANTS.SWIPE.UP;
         }
     }
 

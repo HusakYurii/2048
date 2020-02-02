@@ -22,4 +22,10 @@ export default class extends Model {
             this.grid[row][col].type = type;
         });
     }
+
+    getGrid() {
+        return this.grid.map(gridRow => {
+            return gridRow.map((cellModel) => Object.assign({}, cellModel));
+        })
+    }
 }

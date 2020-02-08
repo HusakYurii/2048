@@ -48,11 +48,23 @@ export default class extends View {
             this.cellsContainer = this.addChild(UIBuilder.createContainer());
         }
 
-        cells.forEach((params) => {
-            const cell = this.createCell(this.assets['baseCell'], params, this.tintMap);
+        cells.forEach(({ remove, create }) => {
+            remove && remove.forEach(({ col, row }) => {
+                this.cellsContainer.removeChild(this.playableCells[row][col]);
+                this.playableCells[row][col] = null;
+            });
 
-            this.playableCells[cell.row][cell.col] = cell;
-            this.cellsContainer.addChild(cell);
+            create && create.forEach((params) => {
+                const cell = this.createCell(this.assets['baseCell'], params, this.tintMap);
+
+                this.playableCells[cell.row][cell.col] = cell;
+                this.cellsContainer.addChild(cell);
+            });
         });
+
+        if (window.Game) {
+            console.log("%c View Data:", "color: white; background: black; fint-size: 15px");
+            console.dir(this.playableCells.map(row => row.map(val => (val ? val.type : val))));
+        }
     }
 }

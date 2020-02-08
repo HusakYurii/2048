@@ -14,18 +14,24 @@ export default class extends Model {
     }
 
     setCalcultedData(gridConfig) {
-        this.grid = gridConfig.map(gridRow => gridRow.map(val => new CellModel(val)));
+        this.grid = gridConfig.map((gridRow) => gridRow.map((val) => new CellModel(val)));
     }
 
     updateData(cells) {
-        cells.forEach(({ row, col, type }) => {
-            this.grid[row][col].type = type;
+        cells.forEach(({ create, remove }) => {
+            remove && remove.forEach(({ row, col }) => (this.grid[row][col].type = 0));
+            create && create.forEach(({ row, col, type }) => (this.grid[row][col].type = type));
         });
+
+        if (window.Game) {
+            console.log("%c Model Data:", "color: white; background: black; fint-size: 15px");
+            console.dir(this.grid.map(row => row.map(val => val.type)));
+        }
     }
 
     getGrid() {
-        return this.grid.map(gridRow => {
-            return gridRow.map((cellModel) => Object.assign({}, cellModel));
+        return this.grid.map((gridRow) => {
+            return gridRow.map((cellModel) => ({ ...cellModel }));
         })
     }
 }

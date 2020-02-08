@@ -1,6 +1,8 @@
 import { Controller } from '../../../libs/component/Controller.js';
 import { Engine } from './engine/Engine.js';
 
+import CONSTANTS from '../shared/Constants.js';
+
 export default class extends Controller {
     constructor(...params) {
         super(...params);
@@ -18,14 +20,26 @@ export default class extends Controller {
         this.view.initViewData(initData);
 
         this.view.createFiledBg(filedSizes, gridConfig);
+
+        this.startGame();
     }
 
-    onUserSwipe({ dir }) {
-        console.log(dir);
+    startGame() {
+        this.generateRandomCells();
+        this.generateRandomCells();
+    }
 
-        const cells = this.engine.generateRandomCells(this.model.grid);
-        this.model.updateData(cells);
-        this.view.updateView(cells);
+    generateRandomCells() {
+        const results = this.engine.generateRandomCells(this.model.getGrid());
+        this.model.updateData(results);
+        this.view.updateView(results);
+    }
+
+    onUserSwipe(direction) {
+        const results = this.engine.slideGrid(this.model.getGrid());
+        this.model.updateData(results);
+        this.view.updateView(results);
+        this.generateRandomCells();
     }
 
     update(delta = 1) { }

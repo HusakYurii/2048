@@ -3,6 +3,8 @@ import { UIBuilder } from '../../../libs/UIBuilder.js';
 import { EmptyCell } from './ui/EmptyCell.js';
 import { Cell } from './ui/Cell.js';
 
+import { invokeAfter } from '../shared/Tools.js';
+
 export default class extends View {
     constructor() {
         super();
@@ -18,7 +20,7 @@ export default class extends View {
         this.tintMap = cellsTintMap;
     }
 
-    createFiledBg(filedSizes, gridConfig) {
+    createField(filedSizes, gridConfig) {
         const background = UIBuilder.createSprite({
             texture: this.assets['fieldBackground'],
             modifiers: { anchor: { x: 0.5, y: 0.5 } }
@@ -34,6 +36,8 @@ export default class extends View {
                 this.addChild(this.createCell(this.assets['baseCell'], params));
             });
         });
+
+        this.cellsContainer = this.addChild(UIBuilder.createContainer());
     }
 
     createCell(texture, params, tintMap = {}) {
@@ -43,23 +47,41 @@ export default class extends View {
         return cell;
     }
 
-    updateView(cells) {
-        if (!this.cellsContainer) {
-            this.cellsContainer = this.addChild(UIBuilder.createContainer());
+    onCellSlided(remove = [], create = [], cb = () => { }) {
+        remove.forEach(({ col, row }) => {
+            this.cellsContainer.removeChild(this.playableCells[row][col]);
+            this.playableCells[row][col] = null;
+        });
+
+        create.forEach((params) => {
+            const cell = this.createCell(this.assets['baseCell'], params, this.tintMap);
+
+            this.playableCells[cell.row][cell.col] = cell;
+            this.cellsContainer.addChild(cell);
+            params.isNew && cell.scaleUp();
+        });
+
+        cb();
+    }
+
+    updateView(rules = [], onUpdated = () => { }) {
+        if (rules.length === 0) {
+            onUpdated();
+            return;
         }
 
-        cells.forEach(({ remove, create }) => {
-            remove && remove.forEach(({ col, row }) => {
-                this.cellsContainer.removeChild(this.playableCells[row][col]);
-                this.playableCells[row][col] = null;
-            });
+        const afterCellSlided = invokeAfter(() => onUpdated(), rules.length);
 
-            create && create.forEach((params) => {
-                const cell = this.createCell(this.assets['baseCell'], params, this.tintMap);
+        rules.forEach(({ from, to, remove, create }) => {
+            if (!from || !to) {
+                this.onCellSlided(remove, create, onUpdated);
+                return;
+            }
 
-                this.playableCells[cell.row][cell.col] = cell;
-                this.cellsContainer.addChild(cell);
-            });
+            const cell = this.playableCells[from.row][from.col];
+            const newPos = { x: create[0].x, y: create[0].y };
+
+            cell.slideTo(newPos, () => this.onCellSlided(remove, create, afterCellSlided));
         });
 
         if (window.Game) {

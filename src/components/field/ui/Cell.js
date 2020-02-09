@@ -7,6 +7,7 @@ export class Cell extends ICell {
 
         this.tint = tintMap[params.type].tint || "0xFFFFFF";
         this.text = '';
+        this._tween = null;
 
         this.createText();
         this.setText(this.type);
@@ -40,5 +41,37 @@ export class Cell extends ICell {
             scl = (cellW - padding * 2) / txtW;
         }
         return scl;
+    }
+
+    stopTween() {
+        if (this._tween) {
+            this._tween.stop();
+        }
+    }
+
+    scaleUp() {
+        const time = 400;
+
+        this._tween = new TWEEN.Tween({ x: 0.7, y: 0.7 })
+            .to({ x: 1, y: 1 }, time)
+            .easing(TWEEN.Easing.Elastic.Out)
+            .onUpdate(({ x, y }) => {
+                this.scale.set(x, y);
+            })
+            .start();
+
+        return this;
+    }
+
+    slideTo({ x, y }, cb) {
+        const speed = 2.5;
+        const time = Math.sqrt((x - this.x) ** 2, (y - this.y) ** 2) / speed;
+
+        this._tween = new TWEEN.Tween(this.position)
+            .to({ x, y }, time)
+            .onComplete(() => cb())
+            .start();
+
+        return this;
     }
 }

@@ -14,7 +14,7 @@ export default class extends Model {
     }
 
     setCalcultedData(gridConfig) {
-        this.grid = gridConfig.map((gridRow) => gridRow.map((val) => new CellModel(val)));
+        this.grid = gridConfig.map(gridRow => gridRow.map(val => new CellModel(val)));
     }
 
     updateData(cells) {
@@ -24,14 +24,14 @@ export default class extends Model {
         });
 
         if (window.Game) {
-            console.log("%c Model Data:", "color: white; background: black; fint-size: 15px");
+            console.log('%c Model Data:', 'color: white; background: black; fint-size: 15px');
             console.dir(this.grid.map(row => row.map(val => val.type)));
         }
     }
 
     getGrid() {
-        return this.grid.map((gridRow) => {
-            return gridRow.map((cellModel) => ({ ...cellModel }));
-        })
+        return this.grid.map(gridRow => {
+            return gridRow.map(cellModel => ({ ...cellModel }));
+        });
     }
 }

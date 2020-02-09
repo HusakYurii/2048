@@ -19,7 +19,7 @@ export default class extends Controller {
 
         this.view.initViewData(initData);
 
-        this.view.createFiledBg(filedSizes, gridConfig);
+        this.view.createField(filedSizes, gridConfig);
 
         this.startGame();
     }
@@ -38,8 +38,9 @@ export default class extends Controller {
     onUserSwipe(direction) {
         const results = this.engine.slideGrid(this.model.getGrid());
         this.model.updateData(results);
-        this.view.updateView(results);
-        this.generateRandomCells();
+        this.view.updateView(results, () => {
+            this.generateRandomCells();
+        });
     }
 
     update(delta = 1) { }

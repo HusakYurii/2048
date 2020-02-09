@@ -1,3 +1,5 @@
+import { randomInt } from '../../shared/Tools.js';
+
 export class Engine {
     constructor() { }
 
@@ -39,15 +41,15 @@ export class Engine {
         const emptyCells = gridData.flat()
             .filter(cell => cell.type === 0);
 
-        const type = Engine.randomInt(0, 10) < 5 ? 2 : 4;
-        let indx = Engine.randomInt(0, emptyCells.length);
+        const type = randomInt(0, 10) < 5 ? 2 : 4;
+        let indx = randomInt(0, emptyCells.length);
 
         while (true) {
             if (emptyCells[indx].type === 0) break;
-            else indx = Engine.randomInt(0, emptyCells.length);
+            else indx = randomInt(0, emptyCells.length);
         }
 
-        return [{ create: [{ ...emptyCells[indx], type }] }]
+        return [{ create: [{ ...emptyCells[indx], isNew: true, type }] }]
     }
 
     slideGrid(gridData) {
@@ -90,8 +92,8 @@ export class Engine {
             results.push({
                 from: { row: next.row, col: next.col },
                 to: { row: first.row, col: first.col },
-                create: [{ ...first, type: first.type + next.type }],
-                remove: [{ ...first }, { ...next }]
+                create: [{ ...first, isNew: true, type: first.type + next.type }],
+                remove: [{ ...first }, { ...next }],
             });
             next.type = 0;
         }
@@ -99,7 +101,3 @@ export class Engine {
         return [...results, ...this.slideRow(arr)];
     }
 }
-
-Engine.randomInt = function (min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-};

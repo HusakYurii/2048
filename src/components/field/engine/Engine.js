@@ -1,8 +1,6 @@
 import { randomInt } from '../../shared/Tools.js';
 
 export class Engine {
-    constructor() { }
-
     calculateFieldSizes({ grid, cellSizes }) {
         return {
             width: cellSizes.width * grid.columns + cellSizes.pitch * (grid.columns + 1),
@@ -11,8 +9,7 @@ export class Engine {
     }
 
     generateGrid({ rows, columns }) {
-        const grid = Array.from({ length: rows })
-            .map((_) => Array.from({ length: columns }).fill(0));
+        const grid = Array.from({ length: rows }).map(_ => Array.from({ length: columns }).fill(0));
 
         return grid.map((row, rowIndx) => {
             return row.map((type, colIndx) => ({ type, row: rowIndx, col: colIndx }));
@@ -29,7 +26,7 @@ export class Engine {
             };
         };
 
-        return emptyGrid.map((gridRow) => {
+        return emptyGrid.map(gridRow => {
             return gridRow.map(({ type, row, col }) => {
                 const pos = calcPosition(filedSizes, cellSizes, col, row);
                 return { row, col, type, ...cellSizes, ...pos };
@@ -38,8 +35,7 @@ export class Engine {
     }
 
     generateRandomCells(gridData) {
-        const emptyCells = gridData.flat()
-            .filter(cell => cell.type === 0);
+        const emptyCells = gridData.flat().filter(cell => cell.type === 0);
 
         const type = randomInt(0, 10) < 5 ? 2 : 4;
         let indx = randomInt(0, emptyCells.length);
@@ -49,15 +45,13 @@ export class Engine {
             else indx = randomInt(0, emptyCells.length);
         }
 
-        return [{ create: [{ ...emptyCells[indx], isNew: true, type }] }]
+        return [{ create: [{ ...emptyCells[indx], isNew: true, type }] }];
     }
 
     slideGrid(gridData) {
-        return gridData.map((gridRow) => this.slideRow(gridRow))
-            .flat();
+        return gridData.map(gridRow => this.slideRow(gridRow)).flat();
     }
 
-    // TODO think of optimizing this mess
     slideRow(arr) {
         const results = [];
         if (arr.length === 0) return results;
@@ -77,23 +71,13 @@ export class Engine {
             first.type = next.type;
             next.type = 0;
             arr.unshift(first);
-        } else if (first.type !== next.type) {
-            if (first.col + 1 !== next.col) {
-                results.push({
-                    from: { row: next.row, col: next.col },
-                    to: { row: first.row, col: first.col + 1 },
-                    create: [{ ...arr[0], type: next.type }],
-                    remove: [{ ...next }]
-                });
-                arr[0].type = next.type;
-                next.type = 0;
-            }
         } else if (first.type === next.type) {
+            const type = first.type + next.type;
             results.push({
                 from: { row: next.row, col: next.col },
                 to: { row: first.row, col: first.col },
-                create: [{ ...first, isNew: true, type: first.type + next.type }],
-                remove: [{ ...first }, { ...next }],
+                create: [{ ...first, isNew: true, type }],
+                remove: [{ ...first }, { ...next }]
             });
             next.type = 0;
         }

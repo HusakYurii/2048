@@ -15,7 +15,7 @@ export default class extends View {
     }
 
     initViewData({ grid, cellsTintMap }) {
-        const createArr = (n) => Array.from({ length: n });
+        const createArr = n => Array.from({ length: n });
         this.playableCells = createArr(grid.rows).map(x => createArr(grid.columns).fill(null));
         this.tintMap = cellsTintMap;
     }
@@ -31,8 +31,8 @@ export default class extends View {
 
         this.addChild(background);
 
-        gridConfig.forEach((gridRow) => {
-            gridRow.forEach((params) => {
+        gridConfig.forEach(gridRow => {
+            gridRow.forEach(params => {
                 this.addChild(this.createCell(this.assets['baseCell'], params));
             });
         });
@@ -53,7 +53,7 @@ export default class extends View {
             this.playableCells[row][col] = null;
         });
 
-        create.forEach((params) => {
+        create.forEach(params => {
             const cell = this.createCell(this.assets['baseCell'], params, this.tintMap);
 
             this.playableCells[cell.row][cell.col] = cell;
@@ -65,11 +65,6 @@ export default class extends View {
     }
 
     updateView(rules = [], onUpdated = () => { }) {
-        if (rules.length === 0) {
-            onUpdated();
-            return;
-        }
-
         const afterCellSlided = invokeAfter(() => onUpdated(), rules.length);
 
         rules.forEach(({ from, to, remove, create }) => {
@@ -85,7 +80,7 @@ export default class extends View {
         });
 
         if (window.Game) {
-            console.log("%c View Data:", "color: white; background: black; fint-size: 15px");
+            console.log('%c View Data:', 'color: white; background: black; fint-size: 15px');
             console.dir(this.playableCells.map(row => row.map(val => (val ? val.type : val))));
         }
     }

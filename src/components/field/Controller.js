@@ -1,6 +1,7 @@
 import { Controller } from '../../../libs/component/Controller.js';
 import { Engine } from './engine/Engine.js';
 
+import { turnColumnsToRows } from '../shared/Tools.js';
 import CONSTANTS from '../shared/Constants.js';
 
 export default class extends Controller {
@@ -36,7 +37,32 @@ export default class extends Controller {
     }
 
     onUserSwipe(direction) {
-        const results = this.engine.slideGrid(this.model.getGrid());
+        let results = [];
+        const gridData = this.model.getGrid();
+
+        switch (direction) {
+            case CONSTANTS.SWIPE.RIGHT:
+                const reversed = gridData.map(row => row.reverse());
+                results = this.engine.slideGrid(reversed);
+                break;
+            case CONSTANTS.SWIPE.LEFT:
+                results = this.engine.slideGrid(gridData);
+                break;
+            case CONSTANTS.SWIPE.UP:
+                const turnedUp = turnColumnsToRows(gridData);
+                results = this.engine.slideGrid(turnedUp);
+                break;
+            case CONSTANTS.SWIPE.DOWN:
+                const turnedDown = turnColumnsToRows(gridData)
+                    .map(row => row.reverse());
+                results = this.engine.slideGrid(turnedDown);
+                break;
+        }
+
+        if (results.length === 0) {
+            return;
+        }
+
         this.model.updateData(results);
         this.view.updateView(results, () => {
             this.generateRandomCells();

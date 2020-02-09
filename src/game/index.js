@@ -12,6 +12,8 @@ export default class Game extends Application {
         /* TODO this is a new mechanic - move it to super class! */
         this.subscribeComponents();
         super.run();
+
+        this.ticker.add(this._tweensLoop.bind(this));
     }
 
     generateAllTextures() {
@@ -56,5 +58,11 @@ export default class Game extends Application {
     /* TODO move it to the super class */
     getComponentByName(name) {
         return this.components[name.toLowerCase()];
+    }
+
+    _tweensLoop() {
+        if (window.TWEEN) {
+            window.TWEEN.update(this.ticker.lastTime);
+        }
     }
 }

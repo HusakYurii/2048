@@ -12,15 +12,11 @@ export default class extends Controller {
         this.onSwipePointerUp = this.onSwipePointerUp.bind(this);
     }
 
-
     run() {
         const { initData } = this.model;
         this.view.create(initData);
 
-        this.view.addSwipeCallbacks(
-            this.onSwipePointerDown,
-            this.onSwipePointerUp
-        );
+        this.view.addSwipeCallbacks(this.onSwipePointerDown, this.onSwipePointerUp);
     }
 
     onSwipePointerDown({ data }) {
@@ -31,7 +27,7 @@ export default class extends Controller {
     }
 
     onSwipePointerUp({ data }) {
-        const inTheList = (id) => this.pointersId.includes(id);
+        const inTheList = id => this.pointersId.includes(id);
         if (!inTheList(data.pointerId)) return;
 
         this.pointersPos.curr = data.getLocalPosition(this.view);
@@ -47,10 +43,15 @@ export default class extends Controller {
         const dy = curr.y - prev.y;
 
         if (Math.abs(dx) > Math.abs(dy)) {
-            return (dx > 0) ? CONSTANTS.SWIPE.RIGHT : CONSTANTS.SWIPE.LEFT;
+            return dx > 0 ? CONSTANTS.SWIPE.RIGHT : CONSTANTS.SWIPE.LEFT;
         } else {
-            return (dy > 0) ? CONSTANTS.SWIPE.DOWN : CONSTANTS.SWIPE.UP;
+            return dy > 0 ? CONSTANTS.SWIPE.DOWN : CONSTANTS.SWIPE.UP;
         }
+    }
+
+    onUpdateScore(score) {
+        this.model.updateScore(score);
+        this.view.updateScore(this.model.currentScore)
     }
 
     update(delta = 1) { }

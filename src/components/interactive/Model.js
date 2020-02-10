@@ -5,9 +5,18 @@ export default class extends Model {
         super();
 
         this.initData = {};
+        this._currentScore = 0;
     }
 
     setData({ model }) {
         this.initData = Object.assign({}, model);
+    }
+
+    updateScore(num) {
+        this._currentScore += num;
+    }
+
+    get currentScore() {
+        return this._currentScore;
     }
 }

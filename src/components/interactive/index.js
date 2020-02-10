@@ -13,7 +13,26 @@ export default new RawComponent({
             width: 420,
             height: 600
         },
-        texturesToGenerate: {},
-        events: []
+        texturesToGenerate: {
+            scoreLableBg: {
+                width: 220,
+                height: 60,
+                radius: 5,
+                type: 'roundedRect',
+                color: '0xbbada0'
+            }
+        },
+        events: [
+            {
+                subscribeTo: {
+                    componentName: 'Field',
+                    eventName: 'updateScore',
+                    type: 'on'
+                },
+                use: {
+                    callbackName: 'onUpdateScore',
+                }
+            }
+        ]
     }
 });

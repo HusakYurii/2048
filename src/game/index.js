@@ -4,6 +4,17 @@ import { UIBuilder } from '../../libs/UIBuilder.js';
 export default class Game extends Application {
     constructor(params) {
         super(params);
+
+        this.restartGame = this.restartGame.bind(this);
+    }
+
+    restartGame() {
+        // TODO think about cleaning cache
+        window.removeEventListener("restartGame", this.restartGame);
+
+        this.stage.removeChildren();
+        this.init();
+        this.run();
     }
 
     run() {
@@ -14,6 +25,7 @@ export default class Game extends Application {
         super.run();
 
         this.ticker.add(this._tweensLoop.bind(this));
+        window.addEventListener("restartGame", this.restartGame);
     }
 
     generateAllTextures() {

@@ -10,6 +10,7 @@ export default class extends Controller {
 
         this.onSwipePointerDown = this.onSwipePointerDown.bind(this);
         this.onSwipePointerUp = this.onSwipePointerUp.bind(this);
+        this.onRestartGame = this.onRestartGame.bind(this);
     }
 
     run() {
@@ -17,6 +18,7 @@ export default class extends Controller {
         this.view.create(initData);
 
         this.view.addSwipeCallbacks(this.onSwipePointerDown, this.onSwipePointerUp);
+        this.view.addRestartCallback(this.onRestartGame);
     }
 
     onSwipePointerDown({ data }) {
@@ -52,6 +54,11 @@ export default class extends Controller {
     onUpdateScore(score) {
         this.model.updateScore(score);
         this.view.updateScore(this.model.currentScore)
+    }
+
+    onRestartGame(event) {
+        event.stopPropagation();
+        window.dispatchEvent(new Event("restartGame"));
     }
 
     update(delta = 1) { }

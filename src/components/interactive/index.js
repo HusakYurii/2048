@@ -20,6 +20,13 @@ export default new RawComponent({
                 radius: 5,
                 type: 'roundedRect',
                 color: '0xbbada0'
+            },
+            restartButton: {
+                width: 70,
+                height: 60,
+                radius: 5,
+                type: 'roundedRect',
+                color: '0x2e3aec'
             }
         },
         events: [

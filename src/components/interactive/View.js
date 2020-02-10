@@ -7,6 +7,7 @@ export default class extends View {
 
         this.swipeLayer = null;
         this.scoreLable = null;
+        this.restartBtn = null;
     }
 
     create({ width, height }) {
@@ -39,12 +40,39 @@ export default class extends View {
         this.scoreLable.text = text;
         this.scoreLable.addChild(text);
 
+        this.restartBtn = UIBuilder.createSprite({
+            texture: this.assets['restartButton'],
+            modifiers: {
+                anchor: { x: 0.5, y: 0.5 },
+                position: { x: 108, y: -250 }
+            }
+        });
+        this.restartBtn.interactive = true;
+        this.addChild(this.restartBtn);
+
+        const icon = UIBuilder.createText({
+            text: "R",
+            styles: {
+                fill: "0xFFFFFF",
+                fontWeight: "bold",
+                fontSize: 40,
+            },
+            modifiers: {
+                anchor: { x: 0.5, y: 0.5 }
+            }
+        });
+
+        this.restartBtn.addChild(icon);
     }
 
     addSwipeCallbacks(onPointerDown, onPointerUp) {
         this.swipeLayer.on("pointerdown", onPointerDown);
         this.swipeLayer.on("pointerupoutside", onPointerUp);
         this.swipeLayer.on("pointerup", onPointerUp);
+    }
+
+    addRestartCallback(onRestartClick) {
+        this.restartBtn.on("pointerdown", onRestartClick);
     }
 
     updateScore(score) {

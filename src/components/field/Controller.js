@@ -66,7 +66,18 @@ export default class extends Controller {
         this.model.updateData(results);
         this.view.updateView(results, () => {
             this.generateRandomCells();
+            this.updateScoreLable(results);
         });
+    }
+
+    updateScoreLable(results) {
+        const score = results.reduce((acc, result) => {
+            const newCells = result.create.filter(val => val.isNew);
+            const sum = newCells.reduce((acc, cell) => acc + cell.type, 0);
+            return (acc + sum);
+        }, 0);
+
+        this.emit('updateScore', score);
     }
 
     update(delta = 1) { }

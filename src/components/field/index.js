@@ -60,7 +60,8 @@ export default new RawComponent({
             baseCell: {
                 width: 64,
                 height: 64,
-                type: 'rect',
+                radius: 6,
+                type: 'roundedRect',
                 color: '0xFFFFFF'
             }
         },

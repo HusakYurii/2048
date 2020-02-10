@@ -40,6 +40,12 @@ export default new RawComponent({
                 },
                 '128': {
                     tint: '0xedce72'
+                },
+                '256': {
+                    tint: '0x6fceb3'
+                },
+                '512': {
+                    tint: '0x78ce6f'
                 }
             }
         },

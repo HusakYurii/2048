@@ -27,6 +27,13 @@ export default new RawComponent({
                 radius: 5,
                 type: 'roundedRect',
                 color: '0x2e3aec'
+            },
+            popup: {
+                width: 350,
+                height: 500,
+                radius: 10,
+                type: 'roundedRect',
+                color: '0x2e3aec'
             }
         },
         events: [
@@ -38,6 +45,16 @@ export default new RawComponent({
                 },
                 use: {
                     callbackName: 'onUpdateScore',
+                }
+            },
+            {
+                subscribeTo: {
+                    componentName: 'Field',
+                    eventName: 'gameOver',
+                    type: 'once'
+                },
+                use: {
+                    callbackName: 'onGameOver',
                 }
             }
         ]

@@ -65,6 +65,42 @@ export default class extends View {
         this.restartBtn.addChild(icon);
     }
 
+    deactivate() {
+        this.swipeLayer.interactive = false;
+        this.restartBtn.interactive = false;
+    }
+
+    showPopUp(callback) {
+        const popup = UIBuilder.createSprite({
+            texture: this.assets['popup'],
+            modifiers: {
+                anchor: { x: 0.5, y: 0.5 },
+                scale: { x: 0, y: 0 }
+            }
+        });
+        const text = UIBuilder.createText({
+            text: "Game Over \n Restart?",
+            styles: {
+                fill: 0xFFFFFF,
+                fontSize: 36
+            },
+            modifiers: {
+                anchor: { x: 0.5, y: 0.5 }
+            }
+        });
+        popup.interactive = true;
+        popup.once("pointerdown", callback);
+
+        popup.addChild(text);
+        this.addChild(popup);
+
+        new TWEEN.Tween(popup.scale)
+            .to({ x: 1, y: 1 }, 500)
+            .easing(TWEEN.Easing.Elastic.Out)
+            .start();
+
+    }
+
     addSwipeCallbacks(onPointerDown, onPointerUp) {
         this.swipeLayer.on("pointerdown", onPointerDown);
         this.swipeLayer.on("pointerupoutside", onPointerUp);

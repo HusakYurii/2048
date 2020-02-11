@@ -61,5 +61,12 @@ export default class extends Controller {
         window.dispatchEvent(new Event("restartGame"));
     }
 
+    onGameOver() {
+        this.view.deactivate();
+        this.view.showPopUp((event) => {
+            this.onRestartGame(event)
+        });
+    }
+
     update(delta = 1) { }
 }

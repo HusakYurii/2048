@@ -18,9 +18,9 @@ export default class extends Model {
     }
 
     updateData(cells) {
-        cells.forEach(({ create, remove }) => {
-            remove && remove.forEach(({ row, col }) => (this.grid[row][col].type = 0));
-            create && create.forEach(({ row, col, type }) => (this.grid[row][col].type = type));
+        cells.forEach(({ create = [], remove = [] }) => {
+            remove.forEach(({ row, col }) => (this.grid[row][col].type = 0));
+            create.forEach(({ row, col, type }) => (this.grid[row][col].type = type));
         });
 
         if (window.Game) {
@@ -29,7 +29,7 @@ export default class extends Model {
         }
     }
 
-    getGrid() {
+    getGridCopy() {
         return this.grid.map(gridRow => {
             return gridRow.map(cellModel => ({ ...cellModel }));
         });

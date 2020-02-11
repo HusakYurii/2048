@@ -31,33 +31,16 @@ export default class extends Controller {
     }
 
     generateRandomCells() {
-        const results = this.engine.generateRandomCells(this.model.getGrid());
+        const results = this.engine.generateRandomCells(this.model.getGridCopy());
         this.model.updateData(results);
         this.view.updateView(results);
     }
 
     onUserSwipe(direction) {
-        let results = [];
-        const gridData = this.model.getGrid();
+        const gridData = this.model.getGridCopy();
+        const preparedGrid = this.prepareGridFor(gridData, direction);
+        const results = this.engine.slideGrid(preparedGrid);
 
-        switch (direction) {
-            case CONSTANTS.SWIPE.RIGHT:
-                const reversed = gridData.map(row => row.reverse());
-                results = this.engine.slideGrid(reversed);
-                break;
-            case CONSTANTS.SWIPE.LEFT:
-                results = this.engine.slideGrid(gridData);
-                break;
-            case CONSTANTS.SWIPE.UP:
-                const turnedUp = turnColumnsToRows(gridData);
-                results = this.engine.slideGrid(turnedUp);
-                break;
-            case CONSTANTS.SWIPE.DOWN:
-                const turnedDown = turnColumnsToRows(gridData)
-                    .map(row => row.reverse());
-                results = this.engine.slideGrid(turnedDown);
-                break;
-        }
 
         if (results.length === 0) {
             return;
@@ -68,6 +51,20 @@ export default class extends Controller {
             this.generateRandomCells();
             this.updateScoreLable(results);
         });
+    }
+
+    prepareGridFor(grid, direction) {
+        switch (direction) {
+            case CONSTANTS.SWIPE.RIGHT:
+                return grid.map(row => row.reverse());
+            case CONSTANTS.SWIPE.LEFT:
+                return grid;
+            case CONSTANTS.SWIPE.UP:
+                return turnColumnsToRows(grid);
+            case CONSTANTS.SWIPE.DOWN:
+                return turnColumnsToRows(grid)
+                    .map(row => row.reverse());
+        }
     }
 
     updateScoreLable(results) {

@@ -34,4 +34,10 @@ export default class extends Model {
             return gridRow.map(cellModel => ({ ...cellModel }));
         });
     }
+
+    get isGridFull() {
+        return this.grid.every(row => {
+            return row.every(val => val.type !== 0);
+        });
+    }
 }

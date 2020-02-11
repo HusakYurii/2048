@@ -34,13 +34,27 @@ export default class extends Controller {
         const results = this.engine.generateRandomCells(this.model.getGridCopy());
         this.model.updateData(results);
         this.view.updateView(results);
+
+        this.checkIfGameOver();
+    }
+
+    checkIfGameOver() {
+        const isGameOver = Object.values(CONSTANTS.SWIPE)
+            .map(direction => {
+                const preparedGrid = this.prepareGridFor(this.model.getGridCopy(), direction);
+                return this.engine.slideGrid(preparedGrid);
+            })
+            .every(result => result.length === 0);
+
+        if (isGameOver) {
+            this.emit("gameOver");
+        }
     }
 
     onUserSwipe(direction) {
         const gridData = this.model.getGridCopy();
         const preparedGrid = this.prepareGridFor(gridData, direction);
         const results = this.engine.slideGrid(preparedGrid);
-
 
         if (results.length === 0) {
             return;

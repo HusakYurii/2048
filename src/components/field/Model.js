@@ -22,11 +22,6 @@ export default class extends Model {
             remove.forEach(({ row, col }) => (this.grid[row][col].type = 0));
             create.forEach(({ row, col, type }) => (this.grid[row][col].type = type));
         });
-
-        if (window.Game) {
-            console.log('%c Model Data:', 'color: white; background: black; fint-size: 15px');
-            console.dir(this.grid.map(row => row.map(val => val.type)));
-        }
     }
 
     getGridCopy() {

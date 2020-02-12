@@ -78,10 +78,5 @@ export default class extends View {
 
             cell.slideTo(newPos, () => this.onCellSlided(remove, create, afterCellSlided));
         });
-
-        if (window.Game) {
-            console.log('%c View Data:', 'color: white; background: black; fint-size: 15px');
-            console.dir(this.playableCells.map(row => row.map(val => (val ? val.type : val))));
-        }
     }
 }

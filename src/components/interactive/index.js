@@ -29,9 +29,10 @@ export default new RawComponent({
                 color: '0x2e3aec'
             },
             popup: {
-                width: 350,
-                height: 500,
+                width: 300,
+                height: 300,
                 radius: 10,
+                alpha: 0.8,
                 type: 'roundedRect',
                 color: '0x2e3aec'
             }

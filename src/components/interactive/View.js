@@ -79,9 +79,13 @@ export default class extends View {
             }
         });
         const text = UIBuilder.createText({
-            text: "Game Over \n Restart?",
+            text: "Game Over! Tap to restart!",
             styles: {
                 fill: 0xFFFFFF,
+                align: "center",
+                breakWords: true,
+                wordWrap: true,
+                wordWrapWidth: 250,
                 fontSize: 36
             },
             modifiers: {

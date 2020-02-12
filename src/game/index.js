@@ -20,8 +20,7 @@ export default class Game extends Application {
     run() {
         /* As I do not use any assets for the game, I need to generate new ones before running the game */
         this.generateAllTextures();
-        /* TODO this is a new mechanic - move it to super class! */
-        this.subscribeComponents();
+
         super.run();
 
         this.ticker.add(this._tweensLoop.bind(this));
@@ -49,27 +48,6 @@ export default class Game extends Application {
             const component = this.getComponentByName(name);
             component.controller.setAssets(assets);
         });
-    }
-
-    subscribeComponents() {
-        Object.values(this._rawComponents).forEach(({ config, name }) => {
-            const currComponent = this.getComponentByName(name);
-
-            config.events.forEach(({ subscribeTo, use }) => {
-                const { componentName, eventName, type } = subscribeTo;
-                const target = this.getComponentByName(componentName);
-                target.controller[type](
-                    eventName,
-                    currComponent.controller[use.callbackName],
-                    currComponent.controller
-                );
-            });
-        });
-    }
-
-    /* TODO move it to the super class */
-    getComponentByName(name) {
-        return this.components[name.toLowerCase()];
     }
 
     _tweensLoop() {

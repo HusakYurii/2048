@@ -24,9 +24,13 @@ export class Application extends PIXI.Application {
         this._rawComponents[data.name] = data;
     }
 
+    getComponentByName(name) {
+        return this.components[name.toLowerCase()];
+    }
+
     resizeApp() {
         const { width, height } = this.screen;
-        
+
         Object.values(this._components).forEach(({ controller }) => {
             controller.view.position.set(width / 2, height / 2)
             controller.resize();
@@ -45,13 +49,36 @@ export class Application extends PIXI.Application {
     }
 
     run() {
-        Object.values(this._components).forEach(({ controller }) => {
-            controller.run();
-            this.stage.addChild(controller.view);
-            this.ticker.add(delta => controller.update(delta));
-        });
-
+        this.subscribeComponents();
+        this.runAllComponents();
         this.resizeApp();
+    }
+
+    runAllComponents() {
+        Object.values(this._components)
+            .forEach(({ controller }) => {
+                controller.run();
+                this.stage.addChild(controller.view);
+                this.ticker.add(delta => controller.update(delta));
+            });
+    }
+
+    subscribeComponents() {
+        Object.values(this._rawComponents)
+            .forEach(({ config, name }) => {
+                const currComponent = this.getComponentByName(name);
+
+                config.events.forEach(({ subscribeTo, use }) => {
+                    const { componentName, eventName, type } = subscribeTo;
+                    const target = this.getComponentByName(componentName);
+
+                    target.controller[type](
+                        eventName,
+                        currComponent.controller[use.callbackName],
+                        currComponent.controller
+                    );
+                });
+            });
     }
 
     /** @readonly */

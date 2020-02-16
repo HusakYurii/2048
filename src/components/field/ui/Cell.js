@@ -51,13 +51,11 @@ export class Cell extends ICell {
 
     scaleUp() {
         const time = 450;
+        this.scale.set(0.7);
 
-        this._tween = new TWEEN.Tween({ x: 0.7, y: 0.7 })
+        this._tween = new TWEEN.Tween(this.scale)
             .to({ x: 1, y: 1 }, time)
             .easing(TWEEN.Easing.Elastic.Out)
-            .onUpdate(({ x, y }) => {
-                this.scale.set(x, y);
-            })
             .start();
 
         return this;
@@ -65,7 +63,7 @@ export class Cell extends ICell {
 
     slideTo({ x, y }, cb) {
         const speed = 2.2;
-        const time = Math.sqrt((x - this.x) ** 2, (y - this.y) ** 2) / speed;
+        const time = Math.sqrt(Math.pow(x - this.x, 2), Math.pow(y - this.y, 2)) / speed;
 
         this._tween = new TWEEN.Tween(this.position)
             .to({ x, y }, time)

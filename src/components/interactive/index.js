@@ -12,7 +12,13 @@ export default new RawComponent({
         model: {
             width: 420,
             height: 600,
-            swipeDistance: 100
+            swipeDistance: 100,
+            keyCodes: {
+                UP: 38,
+                DOWN: 40,
+                RIGHT: 39,
+                LEFT: 37
+            }
         },
         texturesToGenerate: {
             scoreLableBg: {

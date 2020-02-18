@@ -19,6 +19,26 @@ export default class extends Controller {
 
         this.view.addSwipeCallbacks(this.onSwipePointerDown, this.onSwipePointerUp);
         this.view.addRestartCallback(this.onRestartGame);
+
+        window.addEventListener("keydown", this.onKeyDown.bind(this));
+    }
+
+    onKeyDown({ keyCode }) {
+        const { keyCodes } = this.model.initData;
+
+        let direction;
+        switch (keyCode) {
+            case keyCodes.LEFT:
+                direction = CONSTANTS.SWIPE.LEFT; break;
+            case keyCodes.RIGHT:
+                direction = CONSTANTS.SWIPE.RIGHT; break;
+            case keyCodes.DOWN:
+                direction = CONSTANTS.SWIPE.DOWN; break;
+            case keyCodes.UP:
+                direction = CONSTANTS.SWIPE.UP; break;
+        }
+
+        this.emit('userSwipe', direction);
     }
 
     onSwipePointerDown({ data }) {

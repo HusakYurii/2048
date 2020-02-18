@@ -11,7 +11,8 @@ export default new RawComponent({
     config: {
         model: {
             width: 420,
-            height: 600
+            height: 600,
+            swipeDistance: 100
         },
         texturesToGenerate: {
             scoreLableBg: {

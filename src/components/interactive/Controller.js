@@ -34,13 +34,17 @@ export default class extends Controller {
 
         this.pointersPos.curr = data.getLocalPosition(this.view);
 
-        this.emit('userSwipe', this.calcSwipeDir(this.pointersPos));
+        if (this.isSwipe(this.pointersPos)) {
+            this.emit('userSwipe', this.calcSwipeDir(this.pointersPos));
+        }
 
         this.pointersId = [];
         this.pointersPos = {};
     }
 
     calcSwipeDir({ prev, curr }) {
+        console.log("WIPE");
+
         const dx = curr.x - prev.x;
         const dy = curr.y - prev.y;
 
@@ -66,6 +70,12 @@ export default class extends Controller {
         this.view.showPopUp((event) => {
             this.onRestartGame(event)
         });
+    }
+
+    isSwipe({ curr, prev }) {
+        return (
+            Math.sqrt(Math.pow(curr.x - prev.x, 2) + Math.pow(curr.y - prev.y, 2)) >= this.model.initData.swipeDistance
+        );
     }
 
     update(delta = 1) { }

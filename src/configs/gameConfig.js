@@ -2,7 +2,7 @@
 
 export default {
     application: {
-        width: 420,
+        width: 600,
         height: 600,
         antialias: true,
         debuggerMode: true,

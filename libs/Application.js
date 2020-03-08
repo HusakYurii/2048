@@ -1,3 +1,5 @@
+import { ResizeManager } from "./ResizeManager.js";
+
 /** Application class. It will manage all and keep all raw data, init components and run them */
 export class Application extends PIXI.Application {
     constructor({ application } = {}) {
@@ -5,6 +7,7 @@ export class Application extends PIXI.Application {
 
         this._components = {};
         this._rawComponents = {};
+        this._resizeManager = {};
 
         if (application.debuggerMode) {
             window[this.constructor.name] = this;
@@ -28,11 +31,15 @@ export class Application extends PIXI.Application {
         return this.components[name.toLowerCase()];
     }
 
-    resizeApp() {
-        const { width, height } = this.screen;
+    resizeApp({ gameSize, windowSize }) {
+
+        this.view.style.width = `${windowSize.width}px`;
+        this.view.style.height = `${windowSize.height}px`;
+
+        this.renderer.resize(gameSize.width, gameSize.height);
 
         Object.values(this._components).forEach(({ controller }) => {
-            controller.view.position.set(width / 2, height / 2)
+            controller.view.position.set(gameSize.width / 2, gameSize.height / 2)
             controller.resize();
         });
     }
@@ -46,12 +53,14 @@ export class Application extends PIXI.Application {
 
                 this._components[name.toLowerCase()] = { controller };
             });
+
+        this._resizeManager = new ResizeManager(this.screen, (data) => this.resizeApp(data));
     }
 
     run() {
         this.subscribeComponents();
         this.runAllComponents();
-        this.resizeApp();
+        this._resizeManager.resizeView();
     }
 
     runAllComponents() {

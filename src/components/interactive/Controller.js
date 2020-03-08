@@ -82,11 +82,12 @@ export default class extends Controller {
 
     onRestartGame(event) {
         event.stopPropagation();
+        this.view.deactivate(this.onSwipePointerDown, this.onSwipePointerUp, this.onRestartGame);
         window.dispatchEvent(new Event("restartGame"));
     }
 
     onGameOver() {
-        this.view.deactivate();
+        this.view.deactivate(this.onSwipePointerDown, this.onSwipePointerUp, this.onRestartGame);
         this.view.showPopUp((event) => {
             this.onRestartGame(event)
         });

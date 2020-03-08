@@ -34,7 +34,7 @@ export default class Game extends Application {
                 const texture = this.renderer.generateTexture(
                     displayObject,
                     PIXI.SCALE_MODES.LINEAR,
-                    window.devicePixelRatio
+                    1
                 );
                 acc[name] = texture;
                 return acc;

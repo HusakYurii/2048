@@ -65,7 +65,12 @@ export default class extends View {
         this.restartBtn.addChild(icon);
     }
 
-    deactivate() {
+    deactivate(onPointerDown, onPointerUp, onRestartClick) {
+        this.swipeLayer.off("pointerdown", onPointerDown);
+        this.swipeLayer.off("pointerupoutside", onPointerUp);
+        this.swipeLayer.off("pointerup", onPointerUp);
+        this.restartBtn.off("pointerdown", onRestartClick);
+
         this.swipeLayer.interactive = false;
         this.restartBtn.interactive = false;
     }

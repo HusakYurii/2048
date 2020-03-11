@@ -2,8 +2,8 @@
 
 export default {
     application: {
-        width: 600,
-        height: 600,
+        width: 400,
+        height: 400,
         antialias: true,
         debuggerMode: true,
         backgroundColor: "0xfaf8ef"

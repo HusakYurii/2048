@@ -10,7 +10,7 @@ export default new RawComponent({
     controller: Controller,
     config: {
         model: {
-            width: 420,
+            width: 600,
             height: 600,
             swipeDistance: 100,
             keyCodes: {

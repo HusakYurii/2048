@@ -7,7 +7,7 @@ export class Application extends PIXI.Application {
 
         this._components = {};
         this._rawComponents = {};
-        this._resizeManager = this._resizeManager = new ResizeManager(this.screen, (data) => this.resizeApp(data));
+        this._resizeManager = new ResizeManager(this.screen, (data) => this.resizeApp(data));
 
         if (application.debuggerMode) {
             window[this.constructor.name] = this;

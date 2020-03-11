@@ -36,6 +36,7 @@ export default class extends Controller {
                 direction = CONSTANTS.SWIPE.DOWN; break;
             case keyCodes.UP:
                 direction = CONSTANTS.SWIPE.UP; break;
+            default: return;
         }
 
         this.emit('userSwipe', direction);

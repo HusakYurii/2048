@@ -12,7 +12,8 @@ export default class Game extends Application {
         // TODO think about cleaning cache
         window.removeEventListener("restartGame", this.restartGame);
 
-        this.stage.removeChildren();
+        this.removeComponents();
+        this.cleanStage();
         this.init();
         this.run();
     }

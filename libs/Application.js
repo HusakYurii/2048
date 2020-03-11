@@ -7,7 +7,7 @@ export class Application extends PIXI.Application {
 
         this._components = {};
         this._rawComponents = {};
-        this._resizeManager = {};
+        this._resizeManager = this._resizeManager = new ResizeManager(this.screen, (data) => this.resizeApp(data));
 
         if (application.debuggerMode) {
             window[this.constructor.name] = this;
@@ -40,8 +40,16 @@ export class Application extends PIXI.Application {
 
         Object.values(this._components).forEach(({ controller }) => {
             controller.view.position.set(gameSize.width / 2, gameSize.height / 2)
-            controller.resize();
+            controller.resize(gameSize);
         });
+    }
+
+    cleanStage() {
+        this.stage.removeChildren();
+    }
+
+    removeComponents() {
+        this._components = {};
     }
 
     init() {
@@ -53,8 +61,6 @@ export class Application extends PIXI.Application {
 
                 this._components[name.toLowerCase()] = { controller };
             });
-
-        this._resizeManager = new ResizeManager(this.screen, (data) => this.resizeApp(data));
     }
 
     run() {

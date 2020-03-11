@@ -9,7 +9,13 @@ export class ResizeManager {
         this.configSize = { width, height };
         this.onResized = onResized;
 
-        window.addEventListener("resize", () => this.resizeView());
+        this.resizeView = this.resizeView.bind(this);
+
+        window.addEventListener("resize", this.resizeView);
+    }
+
+    destroy() {
+        window.removeEventListener("resize", this.resizeView);
     }
 
     resizeView() {
